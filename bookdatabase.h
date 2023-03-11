@@ -4,6 +4,7 @@
 #include<QObject>
 #include<QList>
 #include<QJsonArray>
+#include<QJsonObject>
 class BookDatabase:public QObject
 {
     Q_OBJECT
@@ -15,10 +16,12 @@ public:
     Q_INVOKABLE bool insertBook(Book book);
     Q_INVOKABLE bool ModifyBookInfo(Book book);
     Q_INVOKABLE Book queryBookInfoById(QString id);
+    Q_INVOKABLE QJsonObject queryBookInfoByIdWithJson(QString id);
     Q_INVOKABLE QList<Book> queryBookInfoByName(QString name);
+    Q_INVOKABLE QJsonArray queryBookInfoByNameByJson(QString name);
     Q_INVOKABLE QList<Book> queryAllBookInfo();
     Q_INVOKABLE QJsonArray queryAllBookInfoByJson();
-    Q_INVOKABLE bool deleteBook(Book book);
+    Q_INVOKABLE bool deleteBookByName(QString name);
     Q_INVOKABLE bool deleteBookById(QString id);
 };
 

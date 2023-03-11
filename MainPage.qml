@@ -4,6 +4,8 @@ import BookDatabase
 
 Rectangle{
     property alias lvRec: listviewRect
+    property alias database: database
+    property alias model: myModel
     id:root
     width: 640
     height: 480
@@ -12,7 +14,34 @@ Rectangle{
     BookDatabase{
         id:database
         Component.onCompleted: {
-            root.loadAllBookInfo()
+            database.loadAllBookInfo()
+        }
+        function loadAllBookInfo(){
+            myModel.clear();
+            var booklist=database.queryAllBookInfoByJson();
+            for(var i in booklist){
+                myModel.append({idnum:booklist[i].id,name:booklist[i].name,
+                                picture:booklist[i].picture,number:booklist[i].number,
+                                price:booklist[i].price});
+
+            }
+        }
+        function loadOneBookInfoById(id){
+            myModel.clear();
+            var book=database.queryBookInfoByIdWithJson(id);
+            myModel.append({idnum:book.id,name:book.name,
+                               picture:book.picture,number:book.number,
+                               price:book.price})
+        }
+        function loadSomeBookInfoByName(name){
+            myModel.clear();
+            var booklist=database.queryBookInfoByNameByJson(name);
+            for(var i in booklist){
+                myModel.append({idnum:booklist[i].id,name:booklist[i].name,
+                                picture:booklist[i].picture,number:booklist[i].number,
+                                price:booklist[i].price});
+
+            }
         }
     }
     Rectangle{
@@ -25,26 +54,7 @@ Rectangle{
             header:Header{}
             delegate: MyDelegate{}
         }
-        ListModel{
-            id:myModel
-//            ListElement{
-//                idnum:'idnum'
-//                name:'name'
-//                picture:'picture'
-//                number:'number'
-//                price:'price'
-//            }
-
-        }
+        ListModel{id:myModel}
     }
-    function loadAllBookInfo(){
-        myModel.clear();
-        var booklist=database.queryAllBookInfoByJson();
-        for(var i in booklist){
-            myModel.append({idnum:booklist[i].id,name:booklist[i].name,
-                            picture:booklist[i].picture,number:booklist[i].number,
-                            price:booklist[i].price});
 
-        }
-    }
 }

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Image/C++ PrimerPlus.jpg</file>
+        <file>Image/html5+CSS.webp</file>
+        <file>Image/javaScript.webp</file>
+        <file>Image/javaScript.jpg</file>
+    </qresource>
+</RCC>

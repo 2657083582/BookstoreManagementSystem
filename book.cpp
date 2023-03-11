@@ -53,6 +53,7 @@ QString Book::name() const
 {
     return this->book_name;
 }
+
 int Book::number() const
 {
     return this->book_number;
@@ -94,5 +95,3 @@ void Book::setPrice(double price)
         emit priceChanged();
     }
 }
-
-

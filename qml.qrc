@@ -6,5 +6,10 @@
         <file>ManagePage.qml</file>
         <file>MyDelegate.qml</file>
         <file>Header.qml</file>
+        <file>GreenMenuItem.qml</file>
+        <file>GreenMenuBarBg.qml</file>
+        <file>GreenMenuBar.qml</file>
+        <file>ActionDialog.qml</file>
+        <file>MyDialog.qml</file>
     </qresource>
 </RCC>

@@ -8,7 +8,7 @@ Rectangle{
         anchors.fill: parent
         spacing: 2
         Repeater{
-            model:["图片","编号","名称","数量","售价"]
+            model:["图片","编号","名称","库存","单价"]
             delegate: Component{
                 Rectangle{
                     color:"#FFF5F5"

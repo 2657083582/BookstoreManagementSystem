@@ -31,6 +31,7 @@ bool BookDatabase::initBookDatabase()
         if(!createBookTable())
             return false;
     }
+
     return true;
 }
 //创建数据表
@@ -52,7 +53,7 @@ bool BookDatabase::createBookTable()
     }
 
 }
-
+//删除数据表
 bool BookDatabase::drop()
 {
     QSqlQuery query;
@@ -70,21 +71,6 @@ bool BookDatabase::drop()
 bool BookDatabase::insertBook(Book book)
 {
     QSqlQuery query;
-//    QString query_select=QString("SELECT * FROM booktable WHERE id='%1'").arg(book.id());
-//    query.exec(query_select);
-//    //如果要插入的书籍的id已经存在，则默认更新其他信息
-//    if(query.next()){
-//        QString query_update=QString("UPDATE booktable SET name='%1',"
-//                                     "picture='%2',"
-//                                     "number='%3',"
-//                                     "price='%4'").arg(book.name()).arg(book.picture()).
-//                             arg(book.number()).arg(book.price());
-//        if(query.exec(query_update))
-//            return true;
-//        else
-//            return false;
-
-//    }
     QString query_insert=QString("INSERT INTO booktable(id,name,picture,number,price)"
                                  "VALUES('%1','%2','%3','%4','%5')").arg(book.id()).
             arg(book.name()).arg(book.picture()).arg(book.number()).arg(book.price());
@@ -95,7 +81,7 @@ bool BookDatabase::insertBook(Book book)
     qDebug()<<QString("insert data '%1','%2'").arg(book.id()).arg(book.name());
     return true;
 }
-
+//修改书籍信息
 bool BookDatabase::ModifyBookInfo(Book book)
 {
     QSqlQuery query;
@@ -118,11 +104,11 @@ bool BookDatabase::ModifyBookInfo(Book book)
         return false;
     }
 }
-//根据id查询书籍信息
+//根据id查询书籍信息，返回Book对象
 Book BookDatabase::queryBookInfoById(QString id)
 {
     QSqlQuery query;
-    QString query_string=QString("SELECT * FROM booktable WHERE id=%1").arg(id);
+    QString query_string=QString("SELECT * FROM booktable WHERE id='%1'").arg(id);
     query.prepare(query_string);
     query.exec(query_string);
     Book *book;
@@ -135,17 +121,43 @@ Book BookDatabase::queryBookInfoById(QString id)
         book=new Book(id,name,picture,number,price);
     }else{
         qDebug()<<"query failed";
-        exit(1);
     }
     return *book;
 }
+//根据id查询书籍信息，返回QJson对象
+QJsonObject BookDatabase::queryBookInfoByIdWithJson(QString id)
+{
+    QSqlQuery query;
+    QString query_string=QString("SELECT * FROM booktable WHERE id='%1'").arg(id);
+    query.prepare(query_string);
+    query.exec(query_string);
+    QJsonObject book;
+    if(query.next()){
+        QString id=query.value(0).toString();
+        QString name=query.value(1).toString();
+        QString picture=query.value(2).toString();
+        int number=query.value(3).toInt();
+        double price=query.value(4).toDouble();
+        book.insert("id",id);
+        book.insert("name",name);
+        book.insert("picture",picture);
+        book.insert("number",number);
+        book.insert("price",price);
+    }else{
+        qDebug()<<"query failed";
 
+    }
+    return book;
+}
+//根据名称查询书籍信息，返回QList<Book>对象
 QList<Book> BookDatabase::queryBookInfoByName(QString name)
 {
     QSqlQuery query;
-    QString query_string=QString("SELECT * FROM booktable WHERE name=%1").arg(name);
+    QString query_string=QString("SELECT * FROM booktable WHERE name='%1'").arg(name);
     query.prepare(query_string);
-    query.exec(query_string);
+    if(!query.exec(query_string)){
+        qDebug()<<query.lastError();
+    }
     QList<Book> booklist;
     while(query.next()){
         QString id=query.value(0).toString();
@@ -159,7 +171,35 @@ QList<Book> BookDatabase::queryBookInfoByName(QString name)
     }
     return booklist;
 }
-
+//根据名称查询书籍信息，返回QJsonArray对象
+QJsonArray BookDatabase::queryBookInfoByNameByJson(QString name)
+{
+    QSqlQuery query;
+    QString query_string=QString("SELECT * FROM booktable WHERE name='%1'").arg(name);
+    query.prepare(query_string);
+    if(!query.exec(query_string)){
+        qDebug()<<query.lastError();
+    }
+    QJsonArray arr;
+    while(query.next()){
+        QString id=query.value(0).toString();
+        QString name=query.value(1).toString();
+        QString picture=query.value(2).toString();
+        int number=query.value(3).toInt();
+        double price=query.value(4).toDouble();
+        QJsonObject *obj=new QJsonObject();
+        obj->insert("id",id);
+        obj->insert("name",name);
+        obj->insert("picture",picture);
+        obj->insert("number",number);
+        obj->insert("price",price);
+        arr.append(*obj);
+        qDebug()<<id<<name;
+        delete obj;
+    }
+    return arr;
+}
+//查询所有书籍信息，返回QList<Book>对象
 QList<Book> BookDatabase::queryAllBookInfo()
 {
     QSqlQuery query;
@@ -177,10 +217,9 @@ QList<Book> BookDatabase::queryAllBookInfo()
         booklist.append(*book);
         delete book;
     }
-    qDebug()<<"finish";
     return booklist;
 }
-
+//查询所有书籍信息，返回QJsonArray对象
 QJsonArray BookDatabase::queryAllBookInfoByJson()
 {
     QSqlQuery query;
@@ -205,12 +244,19 @@ QJsonArray BookDatabase::queryAllBookInfoByJson()
     }
     return arr;
 }
-
-bool BookDatabase::deleteBook(Book book)
+//通过名称删除书籍
+bool BookDatabase::deleteBookByName(QString name)
 {
-    return deleteBookById(book.id());
+    QSqlQuery query;
+    QString query_delete=QString("DELETE FROM booktable WHERE name='%1'").arg(name);
+    if(query.exec(query_delete)){
+        return true;
+    }else{
+        qDebug()<<query.lastError();
+        return false;
+    }
 }
-
+//通过id删除书籍
 bool BookDatabase::deleteBookById(QString id)
 {
     QSqlQuery query;

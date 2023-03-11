@@ -13,8 +13,16 @@ Rectangle{
         anchors.topMargin: 2
         anchors.left: parent.left
         color:"#F6F6F6"
-        Image{
-
+        Rectangle{
+            height: parent.height
+            width: height
+            anchors.centerIn: parent
+            Image{
+                id:image
+                anchors.fill: parent
+                source: picture
+                fillMode: Image.PreserveAspectFit
+            }
         }
     }
     Rectangle{
@@ -80,10 +88,9 @@ Rectangle{
         Text{
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            text:price
+            text:price+"  ¥"
             font.pixelSize: 15
         }
-
     }
 
 }
