@@ -29,8 +29,12 @@ ApplicationWindow {
                 delegate: GreenMenuItem{}
                 background: GreenMenuBarBg{}
             }
-            Action{text:qsTr("新增书籍")}
-//            Action{text:qsTr("下架书籍")}
+            Action{
+                text:qsTr("新增书籍")
+                onTriggered: {
+                    dialog.aD.open()
+                }
+            }
             Menu{
                 title:qsTr("下架书籍")
                 Action{
@@ -49,7 +53,12 @@ ApplicationWindow {
                 delegate: GreenMenuItem{}
                 background: GreenMenuBarBg{}
             }
-            Action{text:qsTr("修改书籍")}
+            Action{
+                text:qsTr("修改书籍")
+                onTriggered: {
+                    dialog.mD.open()
+                }
+            }
             delegate: GreenMenuItem{}
             background: GreenMenuBarBg{}
         }

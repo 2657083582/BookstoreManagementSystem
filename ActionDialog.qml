@@ -7,10 +7,12 @@ Item {
     property alias qND: queryNameDialog
     property alias dID:deleteIdDialog
     property alias dND: deleteNameDialog
-    MyDialog{
+    property alias aD: addDialog
+    property alias mD: modifyDialog
+    MyDialog1{
         id:queryIdDialog
         tips:"请输入编号"
-        curType:MyDialog.MyType.QueryBook
+        curType:MyDialog1.MyType.QueryBook
         onAccepted:  {
             if(!(myInput.text===""||myInput===undefined)){
                 mainPage.database.loadOneBookInfoById(myInput.text)
@@ -22,10 +24,10 @@ Item {
             myInput.clear()
         }
     }
-    MyDialog{
+    MyDialog1{
         id:queryNameDialog
         tips:"请输入名称"
-        curType:MyDialog.MyType.QueryBook
+        curType:MyDialog1.MyType.QueryBook
         onAccepted:  {
             if(!(myInput.text===""||myInput===undefined)){
                 mainPage.database.loadSomeBookInfoByName(myInput.text)
@@ -37,15 +39,32 @@ Item {
             myInput.clear()
         }
     }
-    MyDialog{
+    MyDialog1{
         id:deleteIdDialog
         tips:"请输入编号"
-        curType:MyDialog.MyType.DeleteBook
+        curType:MyDialog1.MyType.DeleteBook
+        onAccepted: {
+            if(!(myInput.text===""||myInput===undefined)){
+                mainPage.database.deleteOneBookById(myInput.text)
+            }
+        }
     }
-    MyDialog{
+    MyDialog1{
         id:deleteNameDialog
         tips:"请输入名称"
-        curType:MyDialog.MyType.DeleteBook
+        curType:MyDialog1.MyType.DeleteBook
+        onAccepted: {
+            if(!(myInput.text===""||myInput===undefined)){
+                mainPage.database.deleteSomeBookByName(myInput.text)
+            }
+        }
     }
-//    Dialog{}
+    MyDialog2{
+        id:addDialog
+        curType: MyDialog2.MyType.AddBook
+    }
+    MyDialog2{
+        id:modifyDialog
+        curType: MyDialog2.MyType.ModifyBook
+    }
 }

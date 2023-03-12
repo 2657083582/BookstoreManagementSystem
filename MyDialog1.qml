@@ -9,7 +9,7 @@ Dialog{
     height: 150
     x:(window.width-width)/2
     y:(window.height-height)/2
-    title:qsTr(curType===0?"查询":"删除")
+    title:qsTr(curType===0?"查询书籍":"删除书籍")
     standardButtons:Dialog.Ok | Dialog.Cancel
     modal: Qt.ApplicationModal
     closePolicy: Popup.NoAutoClose

@@ -17,11 +17,12 @@ int main(int argc, char *argv[])
 
 //    Book *book=new Book("1001","HTML5+CSS","qrc:/Image/html5+CSS.webp",14,54.9);
 //    Book *book1=new Book("1002","C++ Primer Plus","qrc:/Image/C++ PrimerPlus.jpg",5,99.8);
-//    Book *book2=new Book("1003","javaScript","qrc:/Image/javaScript.webp",2,33.8);
-//      Book *book2=new Book("1004","javaScript","qrc:/Image/javaScript.jpg",30,54.8);
+      Book *book2=new Book("1003","javaScript","qrc:/Image/javaScript.webp",2,33.8);
+      Book *book3=new Book("1004","javaScript","qrc:/Image/javaScript.jpg",30,54.8);
 //    database.insertBook(*book);
 //    database.insertBook(*book1);
-//    database.insertBook(*book2);
+      database.insertBook(*book2);
+      database.insertBook(*book3);
 //    QList<Book> booklist=database.queryAllBookInfo();
 //    for(auto i : booklist){
 //        qDebug()<<i.id()<<i.name();

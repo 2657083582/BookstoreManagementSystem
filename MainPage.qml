@@ -43,6 +43,14 @@ Rectangle{
 
             }
         }
+        function deleteOneBookById(id){
+            database.deleteBookById(id);
+            loadAllBookInfo();
+        }
+        function deleteSomeBookByName(name){
+            database.deleteBookByName(name);
+            loadAllBookInfo();
+        }
     }
     Rectangle{
         id:listviewRect

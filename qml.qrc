@@ -10,6 +10,8 @@
         <file>GreenMenuBarBg.qml</file>
         <file>GreenMenuBar.qml</file>
         <file>ActionDialog.qml</file>
-        <file>MyDialog.qml</file>
+        <file>MyDialog1.qml</file>
+        <file>MyDialog2.qml</file>
+        <file>LineInput.qml</file>
     </qresource>
 </RCC>
