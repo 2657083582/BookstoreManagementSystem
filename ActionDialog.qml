@@ -18,11 +18,8 @@ Item {
                 mainPage.database.loadOneBookInfoById(myInput.text)
             }
 
-            myInput.clear()
         }
-        onRejected: {
-            myInput.clear()
-        }
+        onClosed: myInput.clear()
     }
     MyDialog1{
         id:queryNameDialog
@@ -35,9 +32,7 @@ Item {
 
             myInput.clear()
         }
-        onRejected: {
-            myInput.clear()
-        }
+        onClosed: myInput.clear()
     }
     MyDialog1{
         id:deleteIdDialog
@@ -48,6 +43,7 @@ Item {
                 mainPage.database.deleteOneBookById(myInput.text)
             }
         }
+        onClosed: myInput.clear()
     }
     MyDialog1{
         id:deleteNameDialog
@@ -58,10 +54,29 @@ Item {
                 mainPage.database.deleteSomeBookByName(myInput.text)
             }
         }
+        onClosed: myInput.clear()
     }
     MyDialog2{
         id:addDialog
         curType: MyDialog2.MyType.AddBook
+        onAccepted: {
+            if(addDialog.idIsNotEmpty() && addDialog.nameIsNotEmpty &&
+                    addDialog.numberIsUseful() && addDialog.priceIsUseful()){
+                var id=addDialog.idInput.lineInput.text;
+                var name=addDialog.nameInput.lineInput.text;
+                var number=Number(addDialog.numberInput.lineInput.text);
+                var price=Number(addDialog.priceInput.lineInput.text);
+                var picture=addDialog.image.source;
+                mainPage.database.addBook(id,name,picture,number,price)
+            }
+        }
+        onClosed: {
+            addDialog.idInput.lineInput.clear()
+            addDialog.nameInput.lineInput.clear()
+            addDialog.numberInput.lineInput.clear()
+            addDialog.priceInput.lineInput.clear()
+            addDialog.image.source="qrc:/Image/default.jpg"
+        }
     }
     MyDialog2{
         id:modifyDialog

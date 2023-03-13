@@ -81,6 +81,19 @@ bool BookDatabase::insertBook(Book book)
     qDebug()<<QString("insert data '%1','%2'").arg(book.id()).arg(book.name());
     return true;
 }
+
+bool BookDatabase::insertBook(QString id, QString name, QString picture, int number, double price)
+{
+    QSqlQuery query;
+    QString query_insert=QString("INSERT INTO booktable(id,name,picture,number,price)"
+                                 "VALUES('%1','%2','%3','%4','%5')").arg(id).
+            arg(name).arg(picture).arg(number).arg(price);
+    if(!query.exec(query_insert)){
+        qDebug()<<query.lastError();
+        return false;
+    }
+    return true;
+}
 //修改书籍信息
 bool BookDatabase::ModifyBookInfo(Book book)
 {
@@ -103,6 +116,40 @@ bool BookDatabase::ModifyBookInfo(Book book)
         qDebug()<<"id dosen't exist.modify data failed.";
         return false;
     }
+}
+
+bool BookDatabase::ModifyBookInfo(QString id, QString name, QString picture, int number, double price)
+{
+    QSqlQuery query;
+//    QString query_select=QString("SELECT * FROM booktable WHERE id='%1'").arg(id);
+//    query.exec(query_select);
+//    //书籍已经存在才能修改，否则修改失败
+//    if(query.next()){
+//        QString query_update=QString("UPDATE booktable SET name='%1',"
+//                                     "picture='%2',"
+//                                     "number='%3',"
+//                                     "price='%4'").arg(name).arg(picture).
+//                             arg(number).arg(price);
+//        if(query.exec(query_update))
+//            return true;
+//        else
+//            return false;
+
+//    }else{
+//        qDebug()<<"id dosen't exist.modify data failed.";
+//        return false;
+//    }
+    QString query_update=QString("UPDATE booktable SET name='%1',"
+                                 "picture='%2',"
+                                 "number='%3',"
+                                 "price='%4'"
+                                 "WHERE id='%5'").arg(name).arg(picture).
+                         arg(number).arg(price).arg(id);
+    if(query.exec(query_update))
+        return true;
+    else
+        qDebug()<<query.lastError();
+        return false;
 }
 //根据id查询书籍信息，返回Book对象
 Book BookDatabase::queryBookInfoById(QString id)

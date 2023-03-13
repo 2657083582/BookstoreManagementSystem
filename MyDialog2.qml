@@ -10,6 +10,7 @@ Dialog{
     property alias nameInput: nameInput
     property alias numberInput: numberInput
     property alias priceInput: priceInput
+    property alias image: image
     id:root
     width:380
     height: 230
@@ -121,8 +122,40 @@ Dialog{
             }
 
         }
+    }
+    function idIsNotEmpty(){
+        if(idInput.lineInput.text===""||idInput.lineInput===undefined)
+            return false;
+        return true;
+    }
+    function nameIsNotEmpty(){
+        if(nameInput.lineInput.text===""||nameInput.lineInput===undefined)
+            return false;
+        return true;
+    }
+    function numberIsUseful(){
+        if(!(numberInput.lineInput.text===""||numberInput.lineInput===undefined)){
+            var num=Number(numberInput.lineInput.text);
+            if(root.isInt(num)&&num>=0)
+                return true;
+        }
+        return false;
+    }
+    function priceIsUseful(){
+        if(!(priceInput.lineInput.text===""||priceInput.lineInput===undefined)){
+            var num=Number(priceInput.lineInput.text);
+            if(!isNaN(num)&&isFinite(num)&&num>=0){
+                return true;
+            }
+        }
 
-
+        return false;
+    }
+    function isInt(num){
+        if(!isNaN(num)&&isFinite(num)&&num%1===0){
+            return true;
+        }else
+            return false;
     }
 
 }

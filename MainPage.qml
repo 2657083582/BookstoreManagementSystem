@@ -16,31 +16,31 @@ Rectangle{
         Component.onCompleted: {
             database.loadAllBookInfo()
         }
+        function append(book){
+            if(book.id!==""&&book.id!==undefined){
+                myModel.append({idnum:book.id,name:book.name,
+                                   picture:book.picture,number:book.number,
+                                   price:book.price})
+            }
+        }
+
         function loadAllBookInfo(){
             myModel.clear();
             var booklist=database.queryAllBookInfoByJson();
             for(var i in booklist){
-                myModel.append({idnum:booklist[i].id,name:booklist[i].name,
-                                picture:booklist[i].picture,number:booklist[i].number,
-                                price:booklist[i].price});
-
+                append(booklist[i])
             }
         }
         function loadOneBookInfoById(id){
             myModel.clear();
             var book=database.queryBookInfoByIdWithJson(id);
-            myModel.append({idnum:book.id,name:book.name,
-                               picture:book.picture,number:book.number,
-                               price:book.price})
+            append(book);
         }
         function loadSomeBookInfoByName(name){
             myModel.clear();
             var booklist=database.queryBookInfoByNameByJson(name);
             for(var i in booklist){
-                myModel.append({idnum:booklist[i].id,name:booklist[i].name,
-                                picture:booklist[i].picture,number:booklist[i].number,
-                                price:booklist[i].price});
-
+                append(booklist[i])
             }
         }
         function deleteOneBookById(id){
@@ -50,6 +50,13 @@ Rectangle{
         function deleteSomeBookByName(name){
             database.deleteBookByName(name);
             loadAllBookInfo();
+        }
+        function addBook(id,name,picture,number,price){
+            if(database.insertBook(id,name,picture,number,price)){
+                loadAllBookInfo();
+                return true;
+            }
+            return false;
         }
     }
     Rectangle{
