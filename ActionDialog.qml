@@ -68,7 +68,20 @@ Item {
                 var price=Number(addDialog.priceInput.lineInput.text);
                 var picture=addDialog.image.source;
                 mainPage.database.addBook(id,name,picture,number,price)
+            }else{
+                if(!addDialog.idIsNotEmpty())
+                    console.log("id is empty")
+                if(!addDialog.nameIsNotEmpty())
+                    console.log("name is empty")
+                if(!addDialog.numberIsUseful())
+                    console.log("number is unuseful")
+                if(!addDialog.priceIsUseful())
+                    console.log("price is unuseful")
             }
+            console.log(addDialog.idInput.lineInput.text,
+                        addDialog.nameInput.lineInput.text,
+                        addDialog.numberInput.lineInput.text,
+                        addDialog.priceInput.lineInput.text)
         }
         onClosed: {
             addDialog.idInput.lineInput.clear()
@@ -81,5 +94,36 @@ Item {
     MyDialog2{
         id:modifyDialog
         curType: MyDialog2.MyType.ModifyBook
+        onAccepted: {
+            if(modifyDialog.idIsNotEmpty() && modifyDialog.nameIsNotEmpty &&
+                    modifyDialog.numberIsUseful() && modifyDialog.priceIsUseful()){
+                var id=modifyDialog.idInput.lineInput.text;
+                var name=modifyDialog.nameInput.lineInput.text;
+                var number=Number(modifyDialog.numberInput.lineInput.text);
+                var price=Number(modifyDialog.priceInput.lineInput.text);
+                var picture=modifyDialog.image.source;
+                mainPage.database.modifyBook(id,name,picture,number,price)
+            }else{
+                if(!modifyDialog.idIsNotEmpty())
+                    console.log("id is empty")
+                if(!modifyDialog.nameIsNotEmpty())
+                    console.log("name is empty")
+                if(!modifyDialog.numberIsUseful())
+                    console.log("number is unuseful")
+                if(!modifyDialog.priceIsUseful())
+                    console.log("price is unuseful")
+            }
+            console.log(modifyDialog.idInput.lineInput.text,
+                        modifyDialog.nameInput.lineInput.text,
+                        modifyDialog.numberInput.lineInput.text,
+                        modifyDialog.priceInput.lineInput.text)
+        }
+        onClosed: {
+            modifyDialog.idInput.lineInput.clear()
+            modifyDialog.nameInput.lineInput.clear()
+            modifyDialog.numberInput.lineInput.clear()
+            modifyDialog.priceInput.lineInput.clear()
+            modifyDialog.image.source="qrc:/Image/default.jpg"
+        }
     }
 }

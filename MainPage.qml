@@ -58,6 +58,15 @@ Rectangle{
             }
             return false;
         }
+        function modifyBook(id,name,picture,number,price){
+            if(database.modifyBookInfo(id,name,picture,number,price)){
+                loadAllBookInfo()
+                console.log("modify book success")
+                return true;
+            }
+            console.log("modfy book failed")
+            return false;
+        }
     }
     Rectangle{
         id:listviewRect

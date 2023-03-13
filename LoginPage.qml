@@ -5,8 +5,30 @@ Rectangle {
     width: 640
     height: 480
     color:"#FFFFF5"
-    property string id:"root"
+    property string idname:"root"
     property string password:"123"
+    state: "unlogin"
+    states:[
+        State{
+            name:"unlogin"
+
+            PropertyChanges {
+                target: menuBar
+                visible:false
+                focus:false
+            }
+        },
+        State{
+            name:"logined"
+
+            PropertyChanges {
+                target: menuBar
+                visible:true
+                focus:true
+            }
+        }
+
+    ]
     Rectangle{
         id:container
         height: root.height*0.26
@@ -102,9 +124,11 @@ Rectangle {
                 if(login()){
                     console.log("登陆成功")
                     layout.currentIndex=1
+                    root.state="logined"
                 }else{
                     tips.visible=true
                     timer.running=true
+                    root.state="unlogin"
                     console.log("登陆失败")
                 }
             }
@@ -120,7 +144,7 @@ Rectangle {
         }
     }
     function login(){
-        if(idInput.text===id&&passwordInput.text===password)
+        if(idInput.text===root.idname && passwordInput.text===root.password)
             return true;
         else
             return false;

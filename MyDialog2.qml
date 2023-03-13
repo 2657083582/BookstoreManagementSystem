@@ -5,7 +5,6 @@ import QtQuick.Dialogs
 Dialog{
     enum MyType{AddBook,ModifyBook}
     required property int curType
-//    required property string message
     property alias idInput: idInput
     property alias nameInput: nameInput
     property alias numberInput: numberInput

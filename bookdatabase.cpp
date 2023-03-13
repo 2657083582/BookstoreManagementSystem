@@ -95,7 +95,7 @@ bool BookDatabase::insertBook(QString id, QString name, QString picture, int num
     return true;
 }
 //修改书籍信息
-bool BookDatabase::ModifyBookInfo(Book book)
+bool BookDatabase::modifyBookInfo(Book book)
 {
     QSqlQuery query;
     QString query_select=QString("SELECT * FROM booktable WHERE id='%1'").arg(book.id());
@@ -118,7 +118,7 @@ bool BookDatabase::ModifyBookInfo(Book book)
     }
 }
 
-bool BookDatabase::ModifyBookInfo(QString id, QString name, QString picture, int number, double price)
+bool BookDatabase::modifyBookInfo(QString id, QString name, QString picture, int number, double price)
 {
     QSqlQuery query;
 //    QString query_select=QString("SELECT * FROM booktable WHERE id='%1'").arg(id);

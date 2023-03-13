@@ -10,6 +10,9 @@ ApplicationWindow {
 
     title: qsTr("书店管理系统")
     menuBar: MenuBar {
+        id:menuBar
+//        visible: false
+//        focus: false
         Menu{
             title:qsTr("书籍管理")
             Menu{
@@ -75,13 +78,12 @@ ApplicationWindow {
         id:dialog
     }
 
-
     StackLayout{
         id:layout
         anchors.fill: parent
-        currentIndex: 1
+        currentIndex: 0
         LoginPage{
-
+            id:loginPage
         }
         MainPage{
             id:mainPage

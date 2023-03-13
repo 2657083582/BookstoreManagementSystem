@@ -15,8 +15,8 @@ public:
     bool drop();
     Q_INVOKABLE bool insertBook(Book book);
     Q_INVOKABLE bool insertBook(QString id,QString name,QString picture,int number,double price);
-    Q_INVOKABLE bool ModifyBookInfo(Book book);
-    Q_INVOKABLE bool ModifyBookInfo(QString id,QString name,QString picture,int number,double price);
+    Q_INVOKABLE bool modifyBookInfo(Book book);
+    Q_INVOKABLE bool modifyBookInfo(QString id,QString name,QString picture,int number,double price);
     Q_INVOKABLE Book queryBookInfoById(QString id);
     Q_INVOKABLE QJsonObject queryBookInfoByIdWithJson(QString id);
     Q_INVOKABLE QList<Book> queryBookInfoByName(QString name);
